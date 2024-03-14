@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./vue.global.min.js"></script>
+</head>
+<body>
+    
+    <div id="root" class="container">
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">属性绑定方法</h3>
+            </div>
+            <div class="panel-body">
+
+                <p>
+                    <input type="text" v-model="value">
+                </p>
+                <!-- 绑定指令 -- 给元素或者组件绑定数据 v-bind 他是一个通用指令，可以给元素绑定任意属性，需要使用一个属性参数符号(:) -->
+                <!-- v-bind:class 表示所有的内容都是变量 -->
+                <!-- <div v-bind:class="['alert', value > 70 ? 'alert-danger' : value < 40 ? 'alert-success' : 'alert-warning']"> -->
+                <div v-bind:class="{'alert': true, 'alert-danger': value > 70, 'alert-success': value < 40, 'alert-warning': value >= 40 && value <= 70}">
+                    <!-- v-bind:style="{fontSize: value+'px'}" => 简写为：:style="{fontSize: value+'px'}" -->
+                    <strong>Title!</strong> <span :style="{fontSize: value+'px'}">Alert body ...</span>
+                </div>
+                
+                <!-- <div class="alert alert-warning">
+                    <strong>Title!</strong> Alert body ...
+                </div>
+                
+                <div class="alert alert-success">
+                    <strong>Title!</strong> Alert body ...
+                </div> -->
+            </div>
+        </div>
+
+
+        
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    名字：{{ cartObj.name }} 价格：{{ cartObj.price }}
+                    <input type="text" v-model="cartObj.count">
+                </p>
+                <p>
+                    总价：{{ cartObj.price * cartObj.count }} 元
+                </p>
+
+                <!-- v-if和v-show谁的性能好？ -->
+                <!-- 条件渲染这样的指令 if (cartObj.count > 50) else if (cartObj.count <= 20) else -->
+                <!-- v-if="cartObj.count > 50" v-else-if="" v-else -->
+                <p>条件渲染这样的指令</p>
+                <div v-if="cartObj.count > 50" class="alert alert-danger">
+                    <strong>警告!</strong> 超过库存
+                </div>
+                <div v-else-if="cartObj.count <= 20" class="alert alert-success">
+                    <strong>购买!</strong> 可以正常购买
+                </div>
+                <div v-else class="alert alert-warning">
+                    <strong>警告!</strong> 不可以超过正常购买数量
+                </div>
+                <p>伪条件渲染</p>
+                <!-- 伪条件渲染 -- 显示与否 -> v-show="boolean值" -->
+                <div v-show="cartObj.count > 50" class="alert alert-danger">
+                    <strong>警告!</strong> 超过库存
+                </div>
+                <div v-show="cartObj.count <= 20" class="alert alert-success">
+                    <strong>购买!</strong> 可以正常购买
+                </div>
+                <div v-show="cartObj.count <= 50 && cartObj.count > 20" class="alert alert-warning">
+                    <strong>警告!</strong> 不可以超过正常购买数量
+                </div>
+                
+            </div>
+        </div>
+        
+        
+    </div>
+
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    value: 1,
+
+                    cartObj: {
+                        id: 'cart-01',
+                        name: '华为手机',
+                        price: 6000,
+                        count: 1
+                    }
+                }
+            }
+        }).mount('#root')
+    </script>
+    
+</body>
+</html>
